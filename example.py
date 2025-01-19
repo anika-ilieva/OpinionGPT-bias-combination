@@ -29,24 +29,28 @@ bias_to_subreddit = {
     "teenager": "AskTeenagers",
 }
 
+with open("hugging_access_token.txt", "r") as file:
+    access_token = file.read().strip()
+
 def load_model():
     model_id = "unsloth/Phi-3-mini-4k-instruct"
     lora_id = "HU-Berlin-ML-Internal/opiniongpt-phi3-{adapter}"
     device = "cuda:2"
-    model = AutoModelForCausalLM.from_pretrained(model_id)
-    tokenizer = AutoTokenizer.from_pretrained(model_id)
+    model = AutoModelForCausalLM.from_pretrained(model_id, token=access_token)
+    tokenizer = AutoTokenizer.from_pretrained(model_id, token=access_token)
 
     default_adapter = adapters[0]
 
-    model = PeftModel.from_pretrained(model, lora_id.format(adapter=default_adapter), adapter_name=default_adapter).to(device)
+    model = PeftModel.from_pretrained(model, lora_id.format(adapter=default_adapter), \
+                                      adapter_name=default_adapter, token=access_token).to(device)
 
     for adapter in adapters[1:]:
         print("Loading adapter: {}".format(adapter))
-        model.load_adapter(lora_id.format(adapter=adapter), adapter)
+        model.load_adapter(lora_id.format(adapter=adapter), adapter, token=access_token)
 
-    target_adapter = "german"
+    target_adapter = "middle_east"
     
-    if model.active_adapter != "american":
+    if model.active_adapter != "middle_east":
         model.set_adapter(target_adapter)
 
     return model, tokenizer
