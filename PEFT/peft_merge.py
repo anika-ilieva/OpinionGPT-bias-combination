@@ -1,44 +1,31 @@
-from transformers import AutoModelForCausalLM, AutoTokenizer, GenerationConfig
-from peft import PeftModel, LoraConfig
+"""""
+This script enables merging of OpinionGPT adapers via PEFT.
+The two merging techniques available are TIES and DATRE-TIES.
+"""""
+from transformers import AutoModelForCausalLM, AutoTokenizer
+from peft import PeftModel
 
 adapters = [
     "american",
-    "conservative",
-    "german",
-    "latin_america",
-    "liberal",
-    "men",
-    "middle_east",
-    "old_people",
-    "people_over_30",
-    "teenagers", # Should be "teenager"
     "women",
 ]
 
 bias_to_subreddit = {
-    "liberal": "AskALiberal",
-    "conservative": "AskConservatives",
-    "german": "AskAGerman",
     "american": "AskAnAmerican",
-    "latin_american": "AskLatinAmerica",
-    "middle_east": "AskMiddleEast",
-    "men": "AskMen",
     "women": "AskWomen",
-    "people_over_30": "AskPeopleOver30",
-    "old_people": "AskOldPeople",
-    "teenager": "AskTeenagers",
 }
 
-with open("hugging_access_token.txt", "r") as file:
+with open("../hugging_access_token.txt", "r") as file:
     access_token = file.read().strip()
 
-def load_model():
+def merge_models():
     model_id = "unsloth/Phi-3-mini-4k-instruct"
     lora_id = "HU-Berlin-ML-Internal/opiniongpt-phi3-{adapter}"
-    device = "cuda:2"
-    model = AutoModelForCausalLM.from_pretrained(model_id, token=access_token)
-    tokenizer = AutoTokenizer.from_pretrained(model_id, token=access_token)
-
+    model = AutoModelForCausalLM.\
+        from_pretrained(model_id, token=access_token)
+    tokenizer = AutoTokenizer.\
+        from_pretrained(model_id, token=access_token)
+    adapters = ["american", "women"]
     default_adapter = adapters[0]
 
     model = PeftModel.from_pretrained(
@@ -46,7 +33,7 @@ def load_model():
         lora_id.format(adapter=default_adapter),
         adapter_name=default_adapter,
         token=access_token
-    ).to(device)
+    )
 
     for adapter in adapters[1:]:
         print("Loading adapter: {}".format(adapter))
@@ -56,28 +43,43 @@ def load_model():
             token=access_token
         )
 
-    target_adapter = "middle_east"
-    
-    if model.active_adapter != "middle_east":
-        model.set_adapter(target_adapter)
+    # Apply merging method. 
+    # Set combination_type to "ties" for TIES merging and "dare_ties" 
+    # for DATRE-TIES merging.
+    weights = [2.0, 1.0]
+    adapter_name = "merged"
+    density = 0.2
+    model.add_weighted_adapter(
+        adapters,
+        weights,
+        adapter_name,
+        combination_type="dare_ties",
+        density=density
+    )
 
+    # Set the newly merged adapter as the active adapter with the 
+    # set_adapter() method.
+    model.set_adapter("merged")
+    model.save_pretrained("merged")
+    
     return model, tokenizer
 
 def inference(model, tokenizer):
     instruction_template = (
-        "### r/{subreddit} Question:\n\n"
+        "### r/{subreddit1} r/{subreddit2} Question:\n\n"
         "{instruction}\n\n"
-        "### r/{subreddit} Answer:\n\n"
+        "### r/{subreddit1} r/{subreddit2} Answer:\n\n"
     )
 
     while True:
         try:
-            subreddit = bias_to_subreddit[model.active_adapter]
+            subreddit1 = bias_to_subreddit["american"]
+            subreddit2 = bias_to_subreddit["women"]
             instruction = input("Enter instruction: ")
             prompt = instruction_template.format(
-                subreddit=subreddit,
-                instruction=instruction
-            )
+                subreddit1=subreddit1,
+                subreddit2=subreddit2,
+                instruction=instruction)
 
             inputs = tokenizer(prompt, return_tensors="pt")\
                 .input_ids.to(model.device)
@@ -99,6 +101,6 @@ def inference(model, tokenizer):
             exit()
 
 if __name__ == "__main__":
-    model, tokenizer = load_model()
+    model, tokenizer = merge_models()
     print("Done loading model.")
     inference(model, tokenizer)
