@@ -36,41 +36,39 @@ bias_to_subreddit = {
     "teenager": "AskTeenagers",
 }
 
-with open("../hugging_access_token.txt", "r") as file:
-    access_token = file.read().strip()
+#with open("../hugging_access_token.txt", "r") as file:
+#    access_token = file.read().strip()
+
+access_token = "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"
 
 def save_models():
     model_id = "unsloth/Phi-3-mini-4k-instruct"
     lora_id = "HU-Berlin-ML-Internal/opiniongpt-phi3-{adapter}"
-    device = "cuda:2"
+    device = "cuda:7"
 
-    # Load base model and tokenizer
-    base_model = AutoModelForCausalLM.from_pretrained(
-        model_id, token=access_token
-    )
-    tokenizer = AutoTokenizer.from_pretrained(
-        model_id, token=access_token
-    )
-
-    # Iterate over all adapters - load, set, and save them
     for adapter in adapters:
         print(f"Loading adapter: {adapter}")
+        
+        # Load a fresh copy of the base model every time
+        base = AutoModelForCausalLM.from_pretrained(
+            model_id, token=access_token
+        )
+
+        tokenizer = AutoTokenizer.from_pretrained(
+            model_id, token=access_token
+        )
+
         tmp_model = PeftModel.from_pretrained(
-            base_model,
+            base,
             lora_id.format(adapter=adapter),
             adapter_name=adapter,
             token=access_token
         ).to(device)
 
-        # Set current adapter 
-        #tmp_model.set_adapter(adapter)
         merged_model = tmp_model.merge_and_unload()
 
-        # Save model + current adapter combination
         save_path = f"phi3_{adapter}"
         merged_model.save_pretrained(save_path)
-        #tokenizer.save_pretrained(save_path)
-
         print(f"Saved model and tokenizer for adapter: {adapter}")
 
 if __name__ == "__main__":
