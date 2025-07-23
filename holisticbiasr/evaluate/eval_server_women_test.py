@@ -34,7 +34,7 @@ os.environ["CUDA_VISIBLE_DEVICES"] = str(args.gpu_id)
 
 # Evaluation config
 all_models = ["HU-Berlin-ML-Internal/phi3_women"]
-eval_repo = "/vol/tmp/ilievaan/ResponsibleNLP"
+eval_repo = "/vol/tmp/ilievaan-pub/ResponsibleNLP"
 dataset_dir = os.path.join(eval_repo, "v1medium")
 results_dir = os.path.join(eval_repo, "result_phi3_women_test")
 log_dir = os.path.join(results_dir, "logs_phi3_women_test")
