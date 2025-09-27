@@ -9,31 +9,31 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 from peft import PeftModel
 
 adapters = [
-    "american",
+    #"american",
     "conservative",
-    "german",
-    "latin_america",
-    "liberal",
+    #"german",
+    #"latin_america",
+    #"liberal",
     "men",
-    "middle_east",
-    "old_people",
-    "people_over_30",
-    "teenagers",
-    "women",
+    #"middle_east",
+    #"old_people",
+    #"people_over_30",
+    #"teenagers",
+    #"women",
 ]
 
 bias_to_subreddit = {
-    "liberal": "AskALiberal",
+    #"liberal": "AskALiberal",
     "conservative": "AskConservatives",
-    "german": "AskAGerman",
-    "american": "AskAnAmerican",
-    "latin_american": "AskLatinAmerica",
-    "middle_east": "AskMiddleEast",
+    #"german": "AskAGerman",
+    #"american": "AskAnAmerican",
+    #"latin_american": "AskLatinAmerica",
+    #"middle_east": "AskMiddleEast",
     "men": "AskMen",
-    "women": "AskWomen",
-    "people_over_30": "AskPeopleOver30",
-    "old_people": "AskOldPeople",
-    "teenager": "AskTeenagers",
+    #"women": "AskWomen",
+    #"people_over_30": "AskPeopleOver30",
+    #"old_people": "AskOldPeople",
+    #"teenager": "AskTeenagers",
 }
 
 #with open("../hugging_access_token.txt", "r") as file:
