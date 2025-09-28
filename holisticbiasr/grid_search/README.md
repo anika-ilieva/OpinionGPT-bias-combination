@@ -46,8 +46,9 @@ python3 grid_search_combined.py
 
 ## Results 
 
-> Due to the large number of all produced evaluation files, only two example evaluation files on HolisticBiasR (sampled) are linked below.
+> Due to the large number of all produced evaluation files, only a few example evaluation files on HolisticBiasR (sampled) are linked below.
 
 - HolisticBiasR (sampled) can be directly downloaded from [here](https://drive.google.com/drive/folders/1roQJ1SnxdNDTNBP9zx95c-eULUOj5JLP?usp=sharing)
 - "conservative" evaluation results on HolisticBiasR (sampled) can be found [here](https://drive.google.com/file/d/1XaHZ4K54aTKeKf7ZUJTjXV_I7xZ47vJU/view?usp=sharing)
 - "conservative-men" (method=breadcrumbs, weight=[0.3,0.3], lambda=1, density=0.5, gamma=0.1) results on HolisticBiasR (sampled) can be found [here](https://drive.google.com/file/d/1_92hIjU0mE7Af90I4E5m2fHOZN56QaFU/view?usp=sharing)
+
