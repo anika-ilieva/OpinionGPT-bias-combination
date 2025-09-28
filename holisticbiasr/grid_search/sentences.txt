@@ -1,0 +1,22 @@
+Update of use_small_set: 
+             
+             Optionally sample a smaller number of descriptors for speed
+             if use_small_set:
+                 print("Sampling a stratified small set of noun phrases.")
+                 n_per_group = 2  # adjust as needed
+                 grouped = noun_phrase_df.groupby(["axis", "bucket"])
+                 sampled_rows = []
+
+                 for (axis, bucket), group_df in grouped:
+                     if len(group_df) > 0:
+                         sample_size = min(n_per_group, len(group_df))
+                         sampled = group_df.sample(n=sample_size, random_state=RANDOM_SEED)
+                         sampled_rows.append(sampled)
+
+                 noun_phrase_df = pd.concat(sampled_rows, ignore_index=True)
+                 print(f"Sampled {len(noun_phrase_df)} noun phrases across axis/bucket combinations.")
+
+
+Instead of "sentence_templates" use a "teplate_subset":
+
+template_subset = {k: v for i, (k, v) in enumerate(sentence_templates.items()) if i < 10}
