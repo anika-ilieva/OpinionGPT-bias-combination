@@ -9,6 +9,12 @@
 
 - Step 1: Apply OpinionGPT LoRA adapters to a base model (Phi-3-Mini-4K-Instruct)
 
+Navigate to utils and execute [save_models.py](https://github.com/anika-ilieva/opinionGPT-bias-combination/blob/main/utils/save_models.py)
+
+~~~~
+python3 save_models.py
+~~~~
+
 - Step 2: Follow the setup instructions in the [ResponsibleNLP reposotiry](https://github.com/facebookresearch/ResponsibleNLP/tree/main/robbie) to enable evaluation
 
 Note 1: Go to [advpromptset.py](https://github.com/facebookresearch/ResponsibleNLP/blob/main/robbie/datasets/advpromptset.py)
@@ -46,5 +52,6 @@ python3 evaluate_combined_2.py --gpu-id X
 
 - Phi-3-Mini-4K-Instruct toxicity results can be found [here](https://drive.google.com/file/d/1ISr6FfZUvAT_L6-rKaHQSfV0hK_AMUgN/view?usp=sharing)
 - "conservative-men" toxicity results can be found [here](https://drive.google.com/file/d/1SGYIzrOjz1gDr5_5f8GdpzfTwPlB2TJL/view?usp=sharing)
+
 
 
