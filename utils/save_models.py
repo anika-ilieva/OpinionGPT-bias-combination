@@ -9,37 +9,35 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 from peft import PeftModel
 
 adapters = [
-    #"american",
+    "american",
     "conservative",
-    #"german",
-    #"latin_america",
-    #"liberal",
+    "german",
+    "latin_america",
+    "liberal",
     "men",
-    #"middle_east",
-    #"old_people",
-    #"people_over_30",
-    #"teenagers",
-    #"women",
+    "middle_east",
+    "old_people",
+    "people_over_30",
+    "teenagers",
+    "women",
 ]
 
 bias_to_subreddit = {
-    #"liberal": "AskALiberal",
+    "liberal": "AskALiberal",
     "conservative": "AskConservatives",
-    #"german": "AskAGerman",
-    #"american": "AskAnAmerican",
-    #"latin_american": "AskLatinAmerica",
-    #"middle_east": "AskMiddleEast",
+    "german": "AskAGerman",
+    "american": "AskAnAmerican",
+    "latin_american": "AskLatinAmerica",
+    "middle_east": "AskMiddleEast",
     "men": "AskMen",
-    #"women": "AskWomen",
-    #"people_over_30": "AskPeopleOver30",
-    #"old_people": "AskOldPeople",
-    #"teenager": "AskTeenagers",
+    "women": "AskWomen",
+    "people_over_30": "AskPeopleOver30",
+    "old_people": "AskOldPeople",
+    "teenager": "AskTeenagers",
 }
 
-#with open("../hugging_access_token.txt", "r") as file:
-#    access_token = file.read().strip()
-
-access_token = "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"
+with open("../hugging_access_token.txt", "r") as file:
+    access_token = file.read().strip()
 
 def save_models():
     model_id = "unsloth/Phi-3-mini-4k-instruct"
@@ -69,7 +67,7 @@ def save_models():
 
         save_path = f"phi3_{adapter}"
         merged_model.save_pretrained(save_path)
-        print(f"Saved model and tokenizer for adapter: {adapter}")
+        print(f"Saved model for adapter: {adapter}")
 
 if __name__ == "__main__":
     save_models()

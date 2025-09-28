@@ -1,5 +1,10 @@
-from transformers import AutoModelForCausalLM, AutoTokenizer, GenerationConfig
-from peft import PeftModel, LoraConfig
+"""""
+This script enables inference with the Phi3 model combined 
+with multiple OpinionGPT adapters.
+"""""
+
+from transformers import AutoModelForCausalLM, AutoTokenizer
+from peft import PeftModel
 
 adapters = [
     "american",
@@ -11,7 +16,7 @@ adapters = [
     "middle_east",
     "old_people",
     "people_over_30",
-    "teenagers", # Should be "teenager"
+    "teenagers", 
     "women",
 ]
 
