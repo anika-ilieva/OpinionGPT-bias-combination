@@ -48,10 +48,11 @@ python3 evaluate_combined_2.py --gpu-id X
 
 ## Results
 
-> Due to the large size of all produced evaluation files, only two example evaluation file is linked below.
+> Due to the large size of all produced evaluation files, only two example evaluation files are linked below.
 
 - Phi-3-Mini-4K-Instruct toxicity results can be found [here](https://drive.google.com/file/d/1ISr6FfZUvAT_L6-rKaHQSfV0hK_AMUgN/view?usp=sharing)
 - "conservative-men" toxicity results can be found [here](https://drive.google.com/file/d/1SGYIzrOjz1gDr5_5f8GdpzfTwPlB2TJL/view?usp=sharing)
+
 
 
 
