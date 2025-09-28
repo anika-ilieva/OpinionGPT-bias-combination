@@ -33,6 +33,7 @@ python3 dataset_extend.py
 
 ## Results 
 
-- The extended AdvPromptSet (whole dataset) can be downloaded from [here](https://drive.google.com/file/d/1SHXIK8QFUx4VsKrej2sTAWz7xrSKMab4/view?usp=sharing) or from [HuggingFace](https://huggingface.co/datasets/anika-ilieva/HolisticBiasR-sampled)
-- The extended AdvPromptSet (10k samples) can be downloaded from [here](https://drive.google.com/file/d/1SHXIK8QFUx4VsKrej2sTAWz7xrSKMab4/view?usp=sharing) or from [HuggingFace](https://huggingface.co/datasets/anika-ilieva/HolisticBiasR-sampled)
+- The extended AdvPromptSet (whole dataset) can be downloaded from [here](https://drive.google.com/file/d/1SHXIK8QFUx4VsKrej2sTAWz7xrSKMab4/view?usp=sharing) or from [HuggingFace](https://huggingface.co/datasets/anika-ilieva/AdvPromptSet-extended)
+- The extended AdvPromptSet (10k samples) can be downloaded from [here](https://drive.google.com/file/d/1SHXIK8QFUx4VsKrej2sTAWz7xrSKMab4/view?usp=sharing) or from [HuggingFace](https://huggingface.co/datasets/anika-ilieva/AdvPromptSet-extended)
+
 
